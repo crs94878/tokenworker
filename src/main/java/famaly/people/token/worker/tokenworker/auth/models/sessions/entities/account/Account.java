@@ -1,10 +1,9 @@
 package famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account;
 
-import javax.validation.constraints.AssertTrue;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;

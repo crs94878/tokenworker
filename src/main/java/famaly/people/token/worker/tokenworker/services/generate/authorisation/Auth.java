@@ -1,4 +1,4 @@
-package famaly.people.token.worker.tokenworker.token.authorisation;
+package famaly.people.token.worker.tokenworker.services.generate.authorisation;
 
 import famaly.people.token.worker.tokenworker.auth.models.request.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +20,28 @@ public class Auth implements Authorization {
     @Autowired
     private MimeHeaders headers;
 
-    @Value("{soap.endpoint.url}")
+    @Value("${soap.endpoint.url}")
     private String endpointURL;
 
-    @Value("{soap.namespace}")
+    @Value("${soap.namespace}")
     private String namespace;
 
-    @Value("{soap.appname}")
+    @Value("${soap.appname}")
     private String appName;
 
-    @Value("{soap.namespace.url}")
+    @Value("${soap.namespace.url}")
     private String namespaceURL;
 
-    @Value("{soap.action}")
+    @Value("${soap.action}")
     private String action;
 
     @Override
-    public void startAuthorisation(AuthRequest requesst) {
+    public SOAPMessage startAuthorisation(AuthRequest requesst) throws SOAPException{
         this.createSOAPRequestMessage(requesst);
-        this.connectToAuthService();
+        return this.connectToAuthService();
     }
 
-    private void createSOAPRequestMessage(AuthRequest request){
-        try {
+    private void createSOAPRequestMessage(AuthRequest request)throws SOAPException{
             requestMessage.getSOAPBody().removeContents();
             envelope.addNamespaceDeclaration(namespace, namespaceURL);
             headers.addHeader("SOAPAction", action);
@@ -55,9 +54,6 @@ public class Auth implements Authorization {
             passElement.addTextNode(request.getPassword());
             appNameElemeent.addTextNode(appName);
             requestMessage.saveChanges();
-        } catch (SOAPException ex){
-            System.out.println(ex.getMessage());
-        }
     }
 
     private SOAPMessage connectToAuthService(){

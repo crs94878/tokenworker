@@ -1,9 +1,15 @@
 package famaly.people.token.worker.tokenworker.configuration;
 
-import famaly.people.token.worker.tokenworker.auth.models.response.SessionModel;
-import famaly.people.token.worker.tokenworker.token.service.SessionGenerators;
-import famaly.people.token.worker.tokenworker.token.service.SessionReturning;
-import famaly.people.token.worker.tokenworker.token.service.TokenService;
+import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.Token;
+import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.Account;
+import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
+import famaly.people.token.worker.tokenworker.services.generate.SessionGenerators;
+import famaly.people.token.worker.tokenworker.services.generate.SessionReturning;
+import famaly.people.token.worker.tokenworker.services.generate.TokenService;
+import famaly.people.token.worker.tokenworker.services.generate.authorisation.Auth;
+import famaly.people.token.worker.tokenworker.services.generate.authorisation.Authorization;
+import famaly.people.token.worker.tokenworker.services.generate.authorisation.parser.Parser;
+import famaly.people.token.worker.tokenworker.services.generate.authorisation.parser.Parsinng;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -80,14 +86,33 @@ public class AppConf {
     @Bean
     @Lazy
     @Scope(scopeName = "prototype")
-    public SessionModel getSessionModel(){
-        return new SessionModel();
+    public UserAuthSession getSessionModel(){
+        return new UserAuthSession();
+    }
+
+    @Bean
+    public Parsinng parsinng(){
+        return new Parser();
     }
 
     @Bean
     @Lazy
     public TokenService getTokenService(){
         return new TokenService();
+    }
+
+    @Bean(name = "parseMap")
+    @Lazy
+    @Scope(scopeName = "prototype")
+    public Map<String, String> getMapResponseEntity(){
+        return new HashMap<>();
+    }
+
+    @Bean
+    @Lazy
+    @Scope(scopeName = "prototype")
+    public Token getToken(){
+        return new Token();
     }
 
     @Bean
@@ -100,6 +125,21 @@ public class AppConf {
     @Lazy
     public SessionReturning sessionReturning(TokenService tokenService){
         return tokenService;
+    }
+
+
+
+    @Bean
+    @Lazy
+    @Scope(scopeName = "prototype")
+    public Account account(){
+        return new Account();
+    }
+
+    @Bean
+    @Lazy
+    public Authorization getAuthApi(){
+        return new Auth();
     }
 
 }

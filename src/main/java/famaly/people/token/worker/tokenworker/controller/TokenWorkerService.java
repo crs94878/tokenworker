@@ -1,9 +1,9 @@
 package famaly.people.token.worker.tokenworker.controller;
 
 import famaly.people.token.worker.tokenworker.auth.models.request.AuthRequest;
-import famaly.people.token.worker.tokenworker.auth.models.response.SessionModel;
-import famaly.people.token.worker.tokenworker.token.service.SessionGenerators;
-import famaly.people.token.worker.tokenworker.token.service.SessionReturning;
+import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
+import famaly.people.token.worker.tokenworker.services.generate.SessionGenerators;
+import famaly.people.token.worker.tokenworker.services.generate.SessionReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,8 @@ public class TokenWorkerService {
 
     @RequestMapping(path ="/session/authorisation", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<SessionModel> getAuthorisation(@RequestBody AuthRequest userAuthData){
-        SessionModel sessionModel = ((SessionGenerators)sessionReturning).startSessinAuthorisation(userAuthData);
+    ResponseEntity<UserAuthSession> getAuthorisation(@RequestBody AuthRequest userAuthData){
+        UserAuthSession sessionModel = ((SessionGenerators)sessionReturning).startSessionAuthorisation(userAuthData);
         return new ResponseEntity<>(sessionModel, HttpStatus.OK);
     }
 
