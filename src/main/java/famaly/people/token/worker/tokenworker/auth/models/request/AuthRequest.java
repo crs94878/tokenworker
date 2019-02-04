@@ -4,6 +4,7 @@ public class AuthRequest {
 
     private String login;
     private String password;
+    private String appName;
 
     public String getPassword() {
         return password;
@@ -19,5 +20,13 @@ public class AuthRequest {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 }

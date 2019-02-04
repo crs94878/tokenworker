@@ -36,33 +36,27 @@ public class Auth implements Authorization {
     private String action;
 
     @Override
-    public SOAPMessage startAuthorisation(AuthRequest requesst) throws SOAPException{
+    public SOAPMessage startAuthorisation(AuthRequest requesst) throws SOAPException {
         this.createSOAPRequestMessage(requesst);
         return this.connectToAuthService();
     }
 
-    private void createSOAPRequestMessage(AuthRequest request)throws SOAPException{
-            requestMessage.getSOAPBody().removeContents();
-            envelope.addNamespaceDeclaration(namespace, namespaceURL);
-            headers.addHeader("SOAPAction", action);
-            SOAPBody soapBody = envelope.getBody();
-            SOAPElement authRequestElement = soapBody.addChildElement("authRequest", namespace);
-            SOAPElement loginElement = authRequestElement.addChildElement("login", namespace);
-            SOAPElement passElement = authRequestElement.addChildElement("password", namespace);
-            SOAPElement appNameElemeent = authRequestElement.addChildElement("applicationnName", namespace);
-            loginElement.addTextNode(request.getLogin());
-            passElement.addTextNode(request.getPassword());
-            appNameElemeent.addTextNode(appName);
-            requestMessage.saveChanges();
+    private void createSOAPRequestMessage(AuthRequest request) throws SOAPException {
+        requestMessage.getSOAPBody().removeContents();
+        envelope.addNamespaceDeclaration(namespace, namespaceURL);
+        headers.addHeader("SOAPAction", action);
+        SOAPBody soapBody = envelope.getBody();
+        SOAPElement authRequestElement = soapBody.addChildElement("authRequest", namespace);
+        SOAPElement loginElement = authRequestElement.addChildElement("login", namespace);
+        SOAPElement passElement = authRequestElement.addChildElement("password", namespace);
+        SOAPElement appNameElemeent = authRequestElement.addChildElement("applicationnName", namespace);
+        loginElement.addTextNode(request.getLogin());
+        passElement.addTextNode(request.getPassword());
+        appNameElemeent.addTextNode(appName);
+        requestMessage.saveChanges();
     }
 
-    private SOAPMessage connectToAuthService(){
-        try {
-            return connection.call(requestMessage, endpointURL);
-            }catch (SOAPException ex){
-            System.out.println(ex.getMessage());
-            return null;
-        }
+    private SOAPMessage connectToAuthService()throws SOAPException {
+        return connection.call(requestMessage, endpointURL);
     }
-
 }

@@ -2,7 +2,6 @@ package famaly.people.token.worker.tokenworker.services.generate.authorisation.p
 
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.Token;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.Account;
-import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3c.dom.NodeList;
@@ -27,6 +26,7 @@ public class Parser implements Parsinng {
     @Override
     public void parse(SOAPMessage message) throws SOAPException{
         this.startParse(message);
+        this.inititalizeAccountAndToken();
     }
 
     private void startParse(SOAPMessage message){
