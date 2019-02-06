@@ -1,6 +1,7 @@
 package famaly.people.token.worker.tokenworker.services.generate;
 
 import famaly.people.token.worker.tokenworker.auth.models.request.AuthRequest;
+import famaly.people.token.worker.tokenworker.auth.models.response.AuthorisationViewCredintailes;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.Token;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.Account;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
@@ -23,8 +24,11 @@ public class TokenService implements SessionReturning, SessionGenerators {
     @Autowired
     private UserAuthSession userAuthSession;
 
+    @Autowired
+    private AuthorisationViewCredintailes viewCredintailes;
+
     @Override
-    public UserAuthSession startSessionAuthorisation(AuthRequest request) {
+    public AuthorisationViewCredintailes startSessionAuthorisation(AuthRequest request) {
         try {
             SOAPMessage responseMessage = authorization.startAuthorisation(request);
             parser.parse(responseMessage);
@@ -35,7 +39,8 @@ public class TokenService implements SessionReturning, SessionGenerators {
         }catch (SOAPException ex){
             System.out.println(ex.getMessage());
         }
-        return userAuthSession;
+        viewCredintailes.initialize(userAuthSession);
+        return viewCredintailes;
     }
 
     @Override
