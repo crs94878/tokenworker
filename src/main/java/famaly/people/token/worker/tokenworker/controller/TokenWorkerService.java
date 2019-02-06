@@ -1,6 +1,7 @@
 package famaly.people.token.worker.tokenworker.controller;
 
 import famaly.people.token.worker.tokenworker.auth.models.request.AuthRequest;
+import famaly.people.token.worker.tokenworker.auth.models.response.AuthorisationViewCredintailes;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
 import famaly.people.token.worker.tokenworker.services.generate.SessionGenerators;
 import famaly.people.token.worker.tokenworker.services.generate.SessionReturning;
@@ -23,9 +24,9 @@ public class TokenWorkerService {
 
     @RequestMapping(path ="/session/authorisation", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<UserAuthSession> getAuthorisation(@RequestBody AuthRequest userAuthData){
-        UserAuthSession sessionModel = ((SessionGenerators)sessionReturning).startSessionAuthorisation(userAuthData);
-        return new ResponseEntity<>(sessionModel, HttpStatus.OK);
+    ResponseEntity<AuthorisationViewCredintailes> getAuthorisation(@RequestBody AuthRequest userAuthData){
+        AuthorisationViewCredintailes authCredentiales = ((SessionGenerators)sessionReturning).startSessionAuthorisation(userAuthData);
+        return new ResponseEntity<>(authCredentiales, HttpStatus.OK);
     }
 
 }
