@@ -60,7 +60,7 @@ public class Parser implements Parsinng {
                 break;
         }
         String tokenStr = (String)responseEntityMap.get("tokenStr");
-        String accountId = (String)responseEntityMap.get("sessionId");
+        String accountId = (String)responseEntityMap.get("loginId");
         String dateLogin = (String)responseEntityMap.get("dateLogin");
         account.initialize(userNamme, secondName, accountId,login, rules, validation, dateLogin);
         token.setTokenStr(tokenStr);
