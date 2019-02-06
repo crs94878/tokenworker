@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -31,7 +32,7 @@ public class Account extends User {
         this.rules = rules;
         this.isValid = isValid;
         try{
-            Date date = dateFormat.parse(dateLogin);
+            Date date = dateFormat.parse(dateLogin.replace("T"," "));
             gregorianCalendar.setTime(date);
             this.dateLogin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
         }catch (DatatypeConfigurationException | ParseException ex){

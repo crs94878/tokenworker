@@ -1,8 +1,10 @@
 package famaly.people.token.worker.tokenworker.auth.models.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class AuthorisationViewCredintailes {
 
@@ -10,6 +12,7 @@ public class AuthorisationViewCredintailes {
     private String userName;
     private String tokenStr;
     private boolean validation;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateAuth;
 
     public void initialize(UserAuthSession session){
