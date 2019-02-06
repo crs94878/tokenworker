@@ -1,5 +1,6 @@
 package famaly.people.token.worker.tokenworker.configuration;
 
+import famaly.people.token.worker.tokenworker.auth.models.response.AuthorisationViewCredintailes;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.Token;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.Account;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
@@ -66,6 +67,13 @@ public class AppConf {
         MimeHeaders headers = message.getMimeHeaders();
         headers.addHeader("SOAPAction", action);
         return headers;
+    }
+
+    @Bean
+    @Lazy
+    @Scope(scopeName = "prototype")
+    public AuthorisationViewCredintailes authorisationViewCredintailes(){
+        return new AuthorisationViewCredintailes();
     }
 
     @Bean
