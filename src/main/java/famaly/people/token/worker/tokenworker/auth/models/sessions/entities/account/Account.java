@@ -31,7 +31,7 @@ public class Account extends User {
         this.rules = rules;
         this.isValid = isValid;
         try{
-            Date date = dateFormat.parse(dateLogin);
+            Date date = dateFormat.parse(dateLogin.replace("T", " "));
             gregorianCalendar.setTime(date);
             this.dateLogin = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
         }catch (DatatypeConfigurationException | ParseException ex){
