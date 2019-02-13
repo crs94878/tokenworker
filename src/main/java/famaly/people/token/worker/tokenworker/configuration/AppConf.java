@@ -1,16 +1,20 @@
 package famaly.people.token.worker.tokenworker.configuration;
 
 import famaly.people.token.worker.tokenworker.auth.models.response.AuthorisationViewCredintailes;
+import famaly.people.token.worker.tokenworker.auth.models.response.SessionValidationResponse;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.Token;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.account.Account;
 import famaly.people.token.worker.tokenworker.auth.models.sessions.entities.usersession.UserAuthSession;
 import famaly.people.token.worker.tokenworker.services.generate.SessionGenerators;
-import famaly.people.token.worker.tokenworker.services.generate.SessionReturning;
+import famaly.people.token.worker.tokenworker.services.generate.SessionValidation;
 import famaly.people.token.worker.tokenworker.services.generate.TokenService;
 import famaly.people.token.worker.tokenworker.services.generate.authorisation.Auth;
 import famaly.people.token.worker.tokenworker.services.generate.authorisation.Authorization;
 import famaly.people.token.worker.tokenworker.services.generate.authorisation.parser.Parser;
 import famaly.people.token.worker.tokenworker.services.generate.authorisation.parser.Parsinng;
+import famaly.people.token.worker.tokenworker.token.valid.SessionsMapWorker;
+import famaly.people.token.worker.tokenworker.token.valid.UserSession;
+import famaly.people.token.worker.tokenworker.token.valid.controls.SessionValidControls;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -78,8 +82,14 @@ public class AppConf {
 
     @Bean
     @Lazy
-    public Map getSessionMap(){
-        return new HashMap();
+    public SessionsMapWorker sessionsMapWorker(){
+        return new SessionsMapWorker();
+    }
+
+    @Bean(name = "sessionMap")
+    @Lazy
+    public Map<String, UserAuthSession> getSessionMap(){
+        return new HashMap<>();
     }
 
     @Bean
@@ -91,6 +101,7 @@ public class AppConf {
     public GregorianCalendar gregorianCalendar(){
         return new GregorianCalendar();
     }
+
     @Bean
     @Lazy
     @Scope(scopeName = "prototype")
@@ -111,9 +122,14 @@ public class AppConf {
 
     @Bean(name = "parseMap")
     @Lazy
-    @Scope(scopeName = "prototype")
     public Map<String, String> getMapResponseEntity(){
         return new HashMap<>();
+    }
+
+    @Bean
+    @Lazy
+    public SessionValidationResponse sessionValidationResponse(){
+        return new SessionValidationResponse();
     }
 
     @Bean
@@ -122,19 +138,6 @@ public class AppConf {
     public Token getToken(){
         return new Token();
     }
-
-    @Bean
-    @Lazy
-    public SessionGenerators getSessionGenerators(TokenService tokenService){
-        return tokenService;
-    }
-
-    @Bean
-    @Lazy
-    public SessionReturning sessionReturning(TokenService tokenService){
-        return tokenService;
-    }
-
 
 
     @Bean
