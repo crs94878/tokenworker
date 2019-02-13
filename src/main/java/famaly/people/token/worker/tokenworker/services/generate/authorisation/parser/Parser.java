@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class Parser implements Parsinng {
 
-    @Autowired
     @Qualifier("parseMap")
-    private Map responseEntityMap;
+    @Autowired
+    private Map <String, String> responseEntityMap;
 
     @Autowired
     private Account account;
